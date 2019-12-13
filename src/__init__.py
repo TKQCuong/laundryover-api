@@ -23,7 +23,7 @@ from src.models.order import Order
 ## set up Login_manager
 login_manager = LoginManager()
 login_manager.init_app(app)
-# login_manager.login_view = "userpd.login"
+# login_manager.login_view = "userpd.login
 
 from src.components.user import user_blueprint
 app.register_blueprint(user_blueprint, url_prefix="/")
