@@ -28,7 +28,7 @@ def login():
         if user.check_password(password_hash):
             login_user(user)
             print('Successfully log in as', email)
-            return jsonify({'email': email, 'username' : user.username, "token": user.tokens[-1].uuid})
+            return jsonify({'email': email, 'username' : user.username, 'mobile' : user.mobile, "token": user.tokens[-1].uuid})
         return jsonify({'false' : 'wrong pass'})
     return jsonify({'email' : 'false'})
 
@@ -63,5 +63,7 @@ def get_user():
         return jsonify({"asdsadasdad":"adadadasd"})
     token = request.headers.get('Authorization').split(' ')[1]
     reaccess_user = Token.query.filter_by(uuid=token).first()
+    print('reaccess_user',reaccess_user)
     if reaccess_user:
         return jsonify(reaccess_user.user.get_json())
+    return jsonify({ "hello"= "world"})
