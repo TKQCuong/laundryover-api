@@ -66,4 +66,4 @@ def get_user():
     print('reaccess_user',reaccess_user)
     if reaccess_user:
         return jsonify(reaccess_user.user.get_json())
-    return jsonify({ "hello"= "world"})
+    return jsonify({ "hello": "world"})
