@@ -28,7 +28,7 @@ def login():
         if user.check_password(password_hash):
             login_user(user)
             print('Successfully log in as', email)
-            return jsonify({'email': email, 'username' : user.username, 'mobile' : user.mobile, "token": user.tokens.uuid})
+            return jsonify({'email': email, 'username' : user.username, 'mobile' : user.mobile, "token": tokens.uuid})
         return jsonify({'false' : 'wrong pass'})
     return jsonify({'email' : 'false'})
 
