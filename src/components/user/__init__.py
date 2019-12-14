@@ -26,9 +26,15 @@ def login():
         if not user:
             return jsonify({'false' : 'not email'})
         if user.check_password(password_hash):
+            token = Token.query.filter_by(user_id=user.id).first()
+            if not token:
+                token = Token(user_id=user.id,
+                                uuid=str(uuid.uuid4().hex))
+                db.session.add(token)
+                db.session.commit()
             login_user(user)
             print('Successfully log in as', email)
-            return jsonify({'email': email, 'username' : user.username, 'mobile' : user.mobile, "token": tokens.uuid})
+            return jsonify({'email': email, 'username' : user.username, 'mobile' : user.mobile, "token": token.uuid})
         return jsonify({'false' : 'wrong pass'})
     return jsonify({'email' : 'false'})
 

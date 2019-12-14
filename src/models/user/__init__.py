@@ -37,7 +37,7 @@ class User(UserMixin, db.Model):
 class Token(db.Model):
     __tablename__="tokens"
     id = db.Column(db.Integer, primary_key=True)
-    uuid = db.Column(db.Text)
+    uuid = db.Column(db.Text, unique= True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 db.create_all()
