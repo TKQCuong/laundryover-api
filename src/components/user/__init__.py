@@ -73,3 +73,22 @@ def get_user():
     if reaccess_user:
         return jsonify(reaccess_user.user.get_json())
     return jsonify({ "hello": "world"})
+
+@user_blueprint.route('/dashboard', methods=['PUT'])
+@login_required
+def edit_user():
+        data = request.get_json()['update']
+        username = data['username']
+        email = current_user.email
+        mobile = data['mobile']
+        user = User.query.filter_by(email=email).first()
+        user.username = username
+        user.email = email
+        user.mobile = mobile
+        user.set_password(data['password'])
+        db.session.commit()
+        print('update success')
+        return jsonify({'username':username, 'email':email, 'mobile':mobile})
+    
+
+

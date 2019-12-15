@@ -5,11 +5,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 class User(UserMixin, db.Model):
     __tablename__="users"
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String (200), nullable=False)
-    mobile = db.Column(db.String, nullable=False, unique=True)
+    username = db.Column(db.String (200))
+    mobile = db.Column(db.String, unique=True)
     email = db.Column(db.String (200), index = True, unique=True)
     # address = db.Column(db.String(200), nullable=False)
-    password_hash = db.Column(db.String(1200), nullable=False)
+    password_hash = db.Column(db.String(1200))
     tokens = db.relationship("Token", backref="user", lazy=True)
     order = db.relationship("Order", backref="user", lazy=True)
     

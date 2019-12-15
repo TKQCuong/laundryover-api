@@ -17,13 +17,13 @@ def schedule():
         data = request.get_json()['order']
         check_serv = Service.query.filter_by(service_name = data['servicetype']).first()
         print(check_serv,'service here')
-        addr = Location.query.filter_by(location_pickup = data['address']).first()
-        if not addr:
-            address = Location(location_pickup = data['address'])
-            db.session.add(address)
-            db.session.commit()
-        order_item = Order(user_id=current_user.id, service_id=check_serv.id, dateandtime=data['dateandtime'], location_id=addr.id)
-        db.session.add(order_item)
+        # addr = Location.query.filter_by(location_pickup = data['address']).first()
+        # if not addr:
+        address = Location(location_pickup = data['address'])
+        db.session.add(address)
+        db.session.commit()
+        order_items = Order(user_id=current_user.id, service_id=check_serv.id, dateandtime=data['dateandtime'], location_id=address.id)
+        db.session.add(order_items)
         db.session.commit()
         return jsonify({'success':'success'})
 
