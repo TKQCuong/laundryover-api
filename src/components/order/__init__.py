@@ -26,14 +26,13 @@ def schedule():
         db.session.add(order_items)
         db.session.commit()
         return jsonify({'success':'success'})
-    ## FROM HERE IS GET
-    orders = Order.query.all()
-        
 
+    
 @order_blueprint.route('/getData', methods=['GET'])
 @login_required
 def renderOrder():
     orders = Order.query.filter_by(user_id = current_user.id).all()
+    orders = Order.query.order_by(Order.id.desc()).all()
     locations = Location.query.all()
     return jsonify({"order": [order.render() for order in orders],
                     "location": [location.render() for location in locations]})

@@ -15,15 +15,11 @@ migrate = Migrate(app, db)
 from src.models.user import User
 from src.models.user import Token
 from src.models.order import Order
-## import Blueprint
-# from src.components.user import user_blueprint 
-# app.register_blueprint(user_blueprint, url_prefix='/userpd')
-
 
 ## set up Login_manager
 login_manager = LoginManager()
 login_manager.init_app(app)
-# login_manager.login_view = "userpd.login
+# login_manager.login_view = "/login"
 
 from src.components.user import user_blueprint
 app.register_blueprint(user_blueprint, url_prefix="/")

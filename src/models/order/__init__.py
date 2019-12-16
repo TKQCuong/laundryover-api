@@ -11,7 +11,7 @@ class Order(db.Model):
     service_id = db.Column(db.Integer, db.ForeignKey('services.id'))
     dateandtime = db.Column(db.String, nullable=False)
     location_id = db.Column(db.Integer, db.ForeignKey('locations.id'))
-    status = db.Column(db.String, default="Schedule")
+    status = db.Column(db.String, default="Scheduled")
     
     def render(self):
         return {
