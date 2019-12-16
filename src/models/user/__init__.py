@@ -42,3 +42,4 @@ class Token(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 db.create_all()
+
