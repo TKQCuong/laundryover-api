@@ -19,13 +19,32 @@ def schedule():
         print(check_serv,'service here')
         # addr = Location.query.filter_by(location_pickup = data['address']).first()
         # if not addr:
-        address = Location(location_pickup = data['address'])
+        address = Location(user_id = current_user.id, location_pickup = data['address'])
         db.session.add(address)
         db.session.commit()
         order_items = Order(user_id=current_user.id, service_id=check_serv.id, dateandtime=data['dateandtime'], location_id=address.id)
         db.session.add(order_items)
         db.session.commit()
         return jsonify({'success':'success'})
-
+    ## FROM HERE IS GET
+    orders = Order.query.all()
         
 
+@order_blueprint.route('/getData', methods=['GET'])
+@login_required
+def renderOrder():
+    orders = Order.query.filter_by(user_id = current_user.id).all()
+    locations = Location.query.all()
+    return jsonify({"order": [order.render() for order in orders],
+                    "location": [location.render() for location in locations]})
+                
+@order_blueprint.route('/cancelOrder/<id>', methods=['PUT'])
+@login_required
+def cancelOrder(id):
+    data = request.get_json()
+    cancel_order = data['cancel']
+    check_status = Order.query.filter_by(id = id).first()
+    if check_status:
+        check_status.status = cancel_order
+        db.session.commit()
+        return jsonify({'success':True})

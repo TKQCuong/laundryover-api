@@ -11,5 +11,16 @@ class Order(db.Model):
     service_id = db.Column(db.Integer, db.ForeignKey('services.id'))
     dateandtime = db.Column(db.String, nullable=False)
     location_id = db.Column(db.Integer, db.ForeignKey('locations.id'))
+    status = db.Column(db.String, default="Schedule")
     
+    def render(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "service_id": self.service_id,
+            "dateandtime": self.dateandtime,
+            "location_id": self.location_id,
+            "status": self.status
+        }
+
 db.create_all()

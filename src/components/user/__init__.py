@@ -47,6 +47,9 @@ def register():
         password_hash = data['password']
         mobile = data['mobile']
         # address = data['address']
+        check_mobile = User.query.filter_by(mobile=mobile).first()
+        if check_mobile:
+            return jsonify({'false':'existed mobile'})
         user = User.query.filter_by(email = email).first()
         if user:
             print("You've already have account, please sign in")
