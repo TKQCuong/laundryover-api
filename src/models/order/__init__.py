@@ -24,4 +24,3 @@ class Order(db.Model):
         }
 
 db.create_all()
-# here

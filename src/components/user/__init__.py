@@ -93,5 +93,3 @@ def edit_user():
         print('update success')
         return jsonify({'username':username, 'email':email, 'mobile':mobile})
     
-
-

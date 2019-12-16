@@ -38,6 +38,7 @@ app.register_blueprint(order_blueprint, url_prefix="/")
 def load_user(user_id):
     return User.query.get(id)
 
+
 @login_manager.request_loader
 def load_user_from_request(request):
     api_key = request.headers.get('Authorization')
