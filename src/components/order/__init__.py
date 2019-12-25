@@ -32,7 +32,22 @@ def schedule():
 @login_required
 def renderOrder():
     orders = Order.query.filter_by(user_id = current_user.id).order_by(Order.id.desc()).all()
-    # orders = Order.query.order_by(Order.id.desc()).all()
+    locations = Location.query.all()
+    return jsonify({"order": [order.render() for order in orders],
+                    "location": [location.render() for location in locations]})
+
+@order_blueprint.route('/getCancel', methods=['GET'])
+@login_required
+def filterCancel():
+    orders = Order.query.filter_by(user_id = current_user.id, status = 'Cancel').order_by(Order.id.desc()).all()
+    locations = Location.query.all()
+    return jsonify({"order": [order.render() for order in orders],
+                    "location": [location.render() for location in locations]})
+
+@order_blueprint.route('/getSchedule', methods=['GET'])
+@login_required
+def filterSchedule():
+    orders = Order.query.filter_by(user_id = current_user.id, status = 'Scheduled').order_by(Order.id.desc()).all()
     locations = Location.query.all()
     return jsonify({"order": [order.render() for order in orders],
                     "location": [location.render() for location in locations]})
