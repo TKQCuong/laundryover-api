@@ -81,15 +81,19 @@ def get_user():
 @login_required
 def edit_user():
         data = request.get_json()['update']
-        username = data['username']
         email = current_user.email
-        mobile = data['mobile']
         user = User.query.filter_by(email=email).first()
-        user.username = username
-        user.email = email
-        user.mobile = mobile
-        user.set_password(data['password'])
+        if data['username'] is None:
+            user.username = current_user.username
+        else:
+            user.username = data['username']
+        if data['mobile'] is None:
+            user.mobile = current_user.mobile
+        else:
+            user.mobile = data['mobile']
+        if data['password']:
+            user.set_password(data['password'])
+        user.password_hash = current_user.password_hash
         db.session.commit()
-        print('update success')
-        return jsonify({'username':username, 'email':email, 'mobile':mobile})
+        return jsonify({'username': user.username, 'mobile': user.mobile, 'email': email})
     
