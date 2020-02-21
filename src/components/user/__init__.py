@@ -83,6 +83,12 @@ def edit_user():
         data = request.get_json()['update']
         email = current_user.email
         user = User.query.filter_by(email=email).first()
+        userAll = User.query.filter_by().all()
+
+        for i in userAll:
+            if(data['mobile'] == i.mobile):
+                return jsonify({'false' : 'same mobile'})
+
         if data['username'] is None:
             user.username = current_user.username
         else:
@@ -91,9 +97,10 @@ def edit_user():
             user.mobile = current_user.mobile
         else:
             user.mobile = data['mobile']
-        if data['password']:
+        if data['password'] is None:
+            user.password_hash = current_user.password_hash
+        else:
             user.set_password(data['password'])
-        user.password_hash = current_user.password_hash
         db.session.commit()
         return jsonify({'username': user.username, 'mobile': user.mobile, 'email': email})
     
