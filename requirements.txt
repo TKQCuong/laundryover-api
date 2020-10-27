@@ -8,7 +8,7 @@ Click==7.0
 colorama==0.4.1
 colored==1.4.0
 colour==0.1.5
-cryptography==2.8
+cryptography==3.2
 DateTime==4.3
 fire==0.2.1
 Flask==1.1.1
